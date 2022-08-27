@@ -11,8 +11,9 @@ x = [0]*n
 # anss=[0, 1, 2, 0, 1, 0, 0, 2, 1, 0, 0]
 
 # Variance function
-def var(x,y,n):
-    c = [x[i]/y[i] for i in range(n)]
+def var(xx,y,n):
+    c = [xx[i]/y[i] for i in range(n)]
+    print(c)
     s = 0
     su = 0
     for i in c:
@@ -26,38 +27,43 @@ minvar=0
 prvad=0
 prv=0
 # Updating x for every time t<T
-for i in range(1,T+2):
+for i in range(1,T+1):
     ideal=[cc*i/(T) for cc in y]
+    print(ideal)
 
-    print("Time",i-1,"->",end=" ")
     
-    for j in x:
-        print(j,end=" ")
-    print()
+    
+    
 
     c = 0  
     xc = list(x)
     xc[0]+=1
-    s = var(xc,y,n)
+    s = float('inf')
 
-    for i in range(n):
+    for ii in range(n):
         xc = list(x)
-        xc[i]+=1
-        # print(var(xc,y,n),"indvar")
+        xc[ii]+=1
+        print(var(xc,y,n),"indvar",xc)
         if var(xc,y,n)<s:
-            c = i
+            c = ii
             
             s = var(xc,y,n)
+            print("ko")
     minvar+=s
-    print(s)
+    print('minvarda',s)
     x[c]+=1
+
+    print("Time",i,"->",end=" ")
+
+    for j in x:
+        print(j,end=" ")
+    print()
     for i in range(len(x)):
         prv+=(x[i]-ideal[i])**2
         prvad+=(x[i]/y[i]-ideal[i]/y[i])**2
     ress.append(c)
 
 print(ress)
-print(minvar)
-print(prv)
-print(prvad)
-# print(ress==anss*100)
+print(minvar,"minvar")
+print(prv,"prv")
+print(prvad,"prev/original config")
